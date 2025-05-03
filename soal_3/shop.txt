@@ -1,0 +1,6 @@
+[1;34m=== Available Weapons ===[0m
+[36m[1][0m [1mSword[0m (DMG: [32m10[0m, Price: [33m50[0m) [35mIncrease Damage by 5%[0m
+[36m[2][0m [1mAxe[0m (DMG: [32m12[0m, Price: [33m60[0m) [35mCritical Hit Chance +10%[0m
+[36m[3][0m [1mBow[0m (DMG: [32m8[0m, Price: [33m40[0m) [35mDouble Attack Speed[0m
+[36m[4][0m [1mFlame Saber[0m (DMG: [32m15[0m, Price: [33m100[0m)
+[36m[5][0m [1mDagger[0m (DMG: [32m6[0m, Price: [33m30[0m)
