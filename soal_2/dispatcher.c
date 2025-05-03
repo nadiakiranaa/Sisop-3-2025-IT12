@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (argc < 2) {
-        printf("Gunakan: -deliver [Nama], -status [Nama], -list\n");
+        printf("Gunakan: \n./dispatcher -deliver [Nama], -status [Nama], -list\n");
         shmdt(data);
         return 0;
     }
@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
                     strcpy(data->orders[i].status, status);
 
                     log_delivery(getenv("USER"), data->orders[i].nama, data->orders[i].alamat, "Reguler");
-                    printf("[%s] Express Order Delivered to %s (%s) ^^\n", getenv("USER"), nama_user, data->orders[i].alamat);
+                    printf("[%s] Reguler Order Delivered to %s (%s) ^^\n", getenv("USER"), nama_user, data->orders[i].alamat);
                     //printf("Pesanan %s berhasil dikirim oleh Agent %s.\n", nama_user, getenv("USER"));
                 } else {
                     printf("Pesanan sudah dikirim.\n");
@@ -134,8 +134,9 @@ int main(int argc, char* argv[]) {
                 data->orders[i].alamat,
                 data->orders[i].tipe,
                 data->orders[i].status);
-        printf("---------------------------------------------------------------------\n");
+        
         }
+	printf("---------------------------------------------------------------------\n");
     } else {
         printf("Argumen tidak dikenali.\nGunakan:\n./dispatcher -deliver [nama]\n./dispatcher -status [nama]\n./dispatcher -list");
     }
