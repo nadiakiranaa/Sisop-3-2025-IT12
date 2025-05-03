@@ -1,6 +1,6 @@
-# Sisop-2-2025-IT12
+# Sisop-3-2025-IT12
 
-### Soal Modul 2 Sistem Operasi 2025
+### Soal Modul 3 Sistem Operasi 2025
 
 ## Anggota
 | Nama                            | NRP        |
