@@ -130,4 +130,79 @@ int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 ...
 connect(sockfd, (struct sockaddr*)&addr, sizeof(addr));
 ```
+B. Main Menu Interaktif
+Client menampilkan menu utama dengan pilihan seperti: Stats, Shop, Inventory, Battle, Exit.
+```
+printf("\n--- The Lost Dungeon ---\n");
+printf("1. Show Player Stats\n");
+printf("2. Shop (Buy Weapon)\n");
+...
+```
+C. Show Player Stats
+Menampilkan informasi pemain: uang, senjata yang sedang dipakai, base damage, jumlah musuh dikalahkan.
+```
+if (strcmp(cmd, "1") == 0) {
+    strcpy(cmd, "stats");
+}
+...
+send(sockfd, cmd, strlen(cmd), 0);
+recv(sockfd, buffer, BUFFER_SIZE, 0);
+printf("%s\n", buffer);
+```
+D. Weapon Shop
+Toko menyediakan 5+ senjata, 2+ senjata harus memiliki passive dan informasi yang ditampilkan: nama, damage, harga, dan passive (jika ada).
+Kode  shop.c
+```
+Weapon weapons[NUM_WEAPONS] = {
+    {"Sword", 10, 50, 1, "Increase Damage by 5%"},
+    {"Axe", 12, 60, 1, "Critical Hit Chance +10%"},
+    ...
+};
+
+void show_shop(FILE *out) {
+    for (int i = 0; i < 5; i++) {
+        ...
+        if (weapons[i].has_passive)
+            fprintf(out, " \033[35m%s\033[0m", weapons[i].passive);
+    }
+}
+```
+Kode Player.c
+```
+strcpy(cmd, "shop");
+send(sockfd, cmd, strlen(cmd), 0);
+recv(sockfd, buffer, BUFFER_SIZE, 0);
+printf("%s", buffer);
+```
+E. Inventory & Equip Weapon
+Inventory menampilkan senjata yang dimiliki dan efek passive & pemain bisa memilih senjata untuk dipakai.
+```
+strcpy(cmd, "inv");
+send(sockfd, cmd, strlen(cmd), 0);
+recv(sockfd, buffer, BUFFER_SIZE, 0);
+printf("%s", buffer);
+
+printf("Select weapon number to equip (0 to cancel): ");
+...
+send(sockfd, cmd, strlen(cmd), 0);
+recv(sockfd, buffer, BUFFER_SIZE, 0);
+printf("%s", buffer);
+```
+F.  Battle Mode
+Pemain bisa menyerang musuh yang HP-nya acak (misal 50–200) dan ada sistem critical, damage random, reward random.
+```
+strcpy(cmd, "battle");
+send(sockfd, cmd, strlen(cmd), 0);
+
+while (1) {
+    recv(sockfd, buffer, BUFFER_SIZE, 0);
+    printf("%s", buffer);
+
+    printf("Command [attack/exit]: > ");
+    ...
+    send(sockfd, cmd, strlen(cmd), 0);
+    if (strcmp(cmd, "exit") == 0) break;
+}
+```
+G. 
 ## Soal_4
