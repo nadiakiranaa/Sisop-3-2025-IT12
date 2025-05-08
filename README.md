@@ -14,4 +14,11 @@
 ## Soal_1
 ## Soal_2
 ## Soal_3
+A. Koneksi Client-Server (RPC Dungeon)
+Player.c (client) harus terkoneksi ke dungeon.c (server) via socket TCP dan Server harus menangani beberapa client.
+```
+int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+...
+connect(sockfd, (struct sockaddr*)&addr, sizeof(addr));
+```
 ## Soal_4
