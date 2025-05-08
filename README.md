@@ -124,7 +124,7 @@ if (strcmp(argv[1], "-list") == 0) {
 semua barang yang sudah diantar akan berubah statusnya di dalam shared memory sesuai dengan agen yang mengantar.
 ## Soal_3
 A. Koneksi Client-Server (RPC Dungeon)
-Player.c (client) harus terkoneksi ke dungeon.c (server) via socket TCP dan Server harus menangani beberapa client.
+Player.c (client) harus terkoneksi ke dungeon.c (server) dan Server harus menangani beberapa client.
 ```
 int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 ...
@@ -133,9 +133,13 @@ connect(sockfd, (struct sockaddr*)&addr, sizeof(addr));
 B. Main Menu Interaktif
 Client menampilkan menu utama dengan pilihan seperti: Stats, Shop, Inventory, Battle, Exit.
 ```
-printf("\n--- The Lost Dungeon ---\n");
-printf("1. Show Player Stats\n");
-printf("2. Shop (Buy Weapon)\n");
+printf("\n\033[1;33m--- The Lost Dungeon ---\033[0m\n");
+        printf("1. Show Player Stats\n");
+        printf("2. Shop (Buy Weapon)\n");
+        printf("3. View Inventory\n");
+        printf("4. Battle Mode\n");
+        printf("5. Exit Dungeon\n");
+        printf("Select an option [1-5]: ");
 ...
 ```
 C. Show Player Stats
@@ -217,7 +221,7 @@ HP musuh acak, reward juga acak (gold) dan Setelah menang, musuh baru muncul.
 int enemy_hp = 50 + rand() % 151; // 50 - 200
 int gold_reward = 10 + rand() % 41; // 10 - 50
 ```
-I.Error Handling
+I. Error Handling
 Tangani input yang tidak valid, seperti menu salah, weapon ID salah, command battle salah.
 ```
 if (id < 1 || id > 5) {
