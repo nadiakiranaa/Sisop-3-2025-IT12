@@ -204,5 +204,28 @@ while (1) {
     if (strcmp(cmd, "exit") == 0) break;
 }
 ```
-G. 
+G.  Damage Equation + Critical + Passive
+Damage berbasis base damage + random, Critical (misal 20%) melipatgandakan damage, Passive aktif berdasarkan efek senjata.
+```
+int base_dmg = player.base_dmg;
+int dmg = base_dmg + rand() % 5;
+if (weapon.has_crit && rand() % 100 < 20) dmg *= 2;
+```
+H.  Reward dan Health Musuh 
+HP musuh acak, reward juga acak (gold) dan Setelah menang, musuh baru muncul.
+```
+int enemy_hp = 50 + rand() % 151; // 50 - 200
+int gold_reward = 10 + rand() % 41; // 10 - 50
+```
+I.Error Handling
+Tangani input yang tidak valid, seperti menu salah, weapon ID salah, command battle salah.
+```
+if (id < 1 || id > 5) {
+    printf("Invalid Weapon ID.\n");
+}
+...
+else {
+    printf("\033[31mInvalid option. Please, try again!\033[0m\n");
+}
+```
 ## Soal_4
