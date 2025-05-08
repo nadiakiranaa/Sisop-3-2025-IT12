@@ -12,6 +12,115 @@
 ## PENJELASAN
 
 ## Soal_1
+A. Text file rahasia terdapat pada ``LINK BERIKUT``, diperbolehkan untuk download/unzip secara manual.
+```
+wget "https://drive.usercontent.google.com/u/0/uc?id=15mnXpYUimVP1F5Df7qd_Ahbjor3o1cVw&export=download" -0 secrets
+```
+B.Pada image_server.c, program yang dibuat harus berjalan secara daemon di background dan terhubung dengan image_client.c melalui socket RPC.
+```
+   pid_t pid = fork();
+    if (pid < 0) exit(EXIT_FAILURE);
+    if (pid > 0) exit(EXIT_SUCCESS);
+    umask(0);
+    setsid();
+```
+C. Program image_client.c harus bisa terhubung dengan image_server.c dan bisa mengirimkan perintah
+```
+ server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(PORT);
+```
+```
+client_fd = socket(AF_INET, SOCK_STREAM, 0);
+        address.sin_family = AF_INET;
+        address.sin_port = htons(PORT);
+        inet_pton(AF_INET, "127.0.0.1", &address.sin_addr);
+
+        if (connect(client_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
+            printf("Gagal connect ke server!\n");
+            continue;
+        }
+```
+D. Decrypt text file yang dimasukkan dengan cara Reverse Text lalu Decode from Hex, untuk disimpan dalam folder database server dengan nama file berupa timestamp dalam bentuk angka, misalnya: database/1744401282.jpeg
+```
+void decrypt_and_save(char *hex_data, char *filename) {
+    char reversed_hex[MAX_BUFFER];
+    strcpy(reversed_hex, hex_data);
+    reverse_string(reversed_hex);
+
+    char ascii_data[MAX_BUFFER];
+    hex_to_ascii(reversed_hex, ascii_data);
+
+    FILE *jpeg_file = fopen(filename, "wb");
+    if (jpeg_file) {
+        fwrite(ascii_data, 1, strlen(ascii_data), jpeg_file);
+        fclose(jpeg_file);
+    }
+}
+```
+```
+if (strncmp(buffer, "DECRYPT:", 8) == 0) {
+            char *hex_data = buffer + 8;
+            char filename[50];
+            sprintf(filename, "%s%ld.jpeg", DATABASE_DIR, time(NULL));
+            decrypt_and_save(hex_data, filename);
+            write_log("Server", "SAVE", filename);
+            send(client_socket, filename, strlen(filename), 0);
+        }
+```
+E. Request download dari database server sesuai filename yang dimasukkan, misalnya: 1744401282.jpeg
+```
+case 2: {
+                printf("Enter the file name (e.g., 1744493652.jpeg): ");
+                char output_filename[100];
+                scanf("%99s", output_filename);
+
+                sprintf(buffer, "DOWNLOAD:%s", output_filename);
+                send(client_fd, buffer, strlen(buffer), 0);
+
+                char jpeg_data[MAX_BUFFER] = {0};
+                read(client_fd, jpeg_data, MAX_BUFFER);
+
+                if (strncmp(jpeg_data, "ERROR:", 6) == 0) {
+                    printf("%s\n", jpeg_data);
+```
+```
+ else if (strncmp(buffer, "DOWNLOAD:", 9) == 0) {
+            char *requested_file = buffer + 9;
+            FILE *file = fopen(requested_file, "rb");
+            if (file) {
+                char file_data[MAX_BUFFER];
+                size_t bytes_read = fread(file_data, 1, MAX_BUFFER, file);
+                send(client_socket, file_data, bytes_read, 0);
+                write_log("Server", "UPLOAD", requested_file);
+                fclose(file);
+```
+F. Program image_client.c harus disajikan dalam bentuk menu kreatif yang memperbolehkan pengguna untuk memasukkan perintah berkali-kali
+```
+ while (1) {
+        printf("\n[ Image Decoder Client ]\n");
+        printf("1. Send input file to server\n");
+        printf("2. Download file from server\n");
+        printf("3. Exit\n>> ");
+```
+G. Server menyimpan log semua percakapan antara image_server.c dan image_client.c di dalam file server.log 
+```
+void write_log(const char *source, const char *action, const char *info) {
+    time_t now;
+    time(&now);
+    struct tm *tm_info = localtime(&now);
+    char timestamp[20];
+    strftime(timestamp, 20, "%Y-%m-%d %H:%M:%S", tm_info);
+
+    FILE *log_file = fopen(LOG_FILE, "a");
+    if (log_file) {
+        fprintf(log_file, "[%s][%s]: [%s] [%s]\n", source, timestamp, action, info);
+        fclose(log_file);
+    }
+}
+```
 ## Soal_2
 A. Mengunduh File Order dan Menyimpannya ke Shared Memory.
 
