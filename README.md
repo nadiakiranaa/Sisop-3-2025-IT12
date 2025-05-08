@@ -232,4 +232,24 @@ else {
     printf("\033[31mInvalid option. Please, try again!\033[0m\n");
 }
 ```
+## HASIL OUTPUT ##
+1. Main Menu Interaktif
+   ![image](https://github.com/user-attachments/assets/f265a225-3903-4847-a049-7ee145b784b9)
+2. Status check
+   ![image](https://github.com/user-attachments/assets/05642df4-1d52-4dc8-85c1-0cdf852ecbe6)
+3. Weapon Shop
+  ![image](https://github.com/user-attachments/assets/d83aac6a-3607-473e-94cd-59e75d9864ef)
+4. Handy Inventory
+![image](https://github.com/user-attachments/assets/eb102311-1c69-4e4a-b959-ba380fb17946)
+ ![image](https://github.com/user-attachments/assets/146a8379-f5e9-4166-9c3d-022f52b93b9e)
+5. Enemy Encounter
+![image](https://github.com/user-attachments/assets/cdec3d59-f627-4ec8-9e0b-224c6aea16e4)
+6.Critical Hitt
+![image](https://github.com/user-attachments/assets/2257f028-b8ee-494a-97fe-b1ad4bbc7bd3)
+7. Reward Gold dan muncul musuh
+   ![image](https://github.com/user-attachments/assets/054baeed-cdc6-4541-b8b9-7028e3915fb2)
+8. Passive active
+   ![image](https://github.com/user-attachments/assets/94748939-f0bc-426a-870a-010cc4074b1f)
+9. Error Handling
+    ![image](https://github.com/user-attachments/assets/f5be49e3-0edb-409d-afd2-5df883a73b05)
 ## Soal_4
